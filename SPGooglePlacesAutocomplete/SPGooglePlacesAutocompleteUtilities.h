@@ -14,7 +14,8 @@ typedef NS_ENUM(NSInteger, SPGooglePlacesAutocompleteFilterPlaceType) {
     SPFilterPlaceTypeInvalid = -1,
     SPFilterPlaceTypeGeocode = 0,
     SPFilterPlaceTypeEstablishment,
-    SPFilterPlaceTypeCities
+    SPFilterPlaceTypeCities,
+    SPFilterPlaceTypeRegions
 };
 
 typedef NS_ENUM(NSInteger, SPGooglePlacesAutocompletePlaceType) {
@@ -154,7 +155,7 @@ extern NSDictionary *SPGetMatchingDictionaryType();
 extern NSArray  *SPPlaceTypeFromDictionary(NSDictionary *placeDictionary);
 extern NSString *SPBooleanStringForBool(BOOL boolean);
 extern NSArray  *SPPlaceTypeStringForPlaceTypes(NSArray *types);
-extern NSString *SPPlaceTypeStringForPlaceType(SPGooglePlacesAutocompleteFilterPlaceType type);
+extern NSString *SPPlaceTypeStringForAutocompleteFilterPlaceType(SPGooglePlacesAutocompleteFilterPlaceType type);
 extern BOOL SPIsEmptyString(NSString *string);
 
 @interface NSArray(SPFoundationAdditions)

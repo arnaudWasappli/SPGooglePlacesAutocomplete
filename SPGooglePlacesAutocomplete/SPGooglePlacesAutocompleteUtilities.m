@@ -14,6 +14,21 @@
 }
 @end
 
+NSDictionary *SPGetMatchingDictionaryFilteredType() {
+    static NSDictionary *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = @{
+                           @"(cities)":[NSNumber numberWithInt:SPFilterPlaceTypeCities],
+                           @"(regions)":[NSNumber numberWithInt:SPFilterPlaceTypeRegions],
+                           @"geocode":[NSNumber numberWithInt:SPFilterPlaceTypeGeocode],
+                           @"establishment":[NSNumber numberWithInt:SPFilterPlaceTypeEstablishment],
+                           };
+    });
+
+    return sharedInstance;
+}
+
 NSDictionary *SPGetMatchingDictionaryType() {
     static NSDictionary *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -150,25 +165,14 @@ NSDictionary *SPGetMatchingDictionaryType() {
     return sharedInstance;
 }
 
-NSString *SPPlaceTypeStringForPlaceType(SPGooglePlacesAutocompleteFilterPlaceType type) {
-    NSString *returnType = nil;
+NSString *SPPlaceTypeStringForAutocompleteFilterPlaceType(SPGooglePlacesAutocompleteFilterPlaceType type) {
+    NSString *typeString = [[SPGetMatchingDictionaryFilteredType() allKeysForObject:[NSNumber numberWithInt:type]] objectAtIndex:0];
     
-    switch (type) {
-        case SPFilterPlaceTypeCities:
-            returnType = @"(cities)";
-            break;
-        case SPFilterPlaceTypeEstablishment:
-            returnType = @"establishment";
-            break;
-        case SPFilterPlaceTypeGeocode:
-            returnType = @"geocode";
-            break;
-        default:
-            returnType = @"";
-            break;
+    if (!typeString) {
+        typeString = @"";
     }
     
-    return returnType;
+    return typeString;
 }
 
 NSArray *SPPlaceTypeFromDictionary(NSDictionary *placeDictionary) {

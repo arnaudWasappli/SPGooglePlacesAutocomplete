@@ -51,7 +51,7 @@
         [url appendFormat:@"&language=%@", self.language];
     }
     if (self.type != SPFilterPlaceTypeInvalid) {
-        [url appendFormat:@"&types=%@", SPPlaceTypeStringForPlaceType(self.type)];
+        [url appendFormat:@"&types=%@", SPPlaceTypeStringForAutocompleteFilterPlaceType(self.type)];
     }
     return url;
 }
