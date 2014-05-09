@@ -72,7 +72,7 @@
 /*!
  The types of Place results to return. If no type is specified, all types will be returned.
  */
-@property (nonatomic) SPGooglePlacesAutocompletePlaceType types;
+@property (nonatomic) SPGooglePlacesAutocompleteFilterPlaceType type;
 
 @end
 
