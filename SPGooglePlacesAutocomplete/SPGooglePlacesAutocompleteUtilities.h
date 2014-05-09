@@ -10,14 +10,14 @@
 
 @class CLPlacemark;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, SPGooglePlacesAutocompleteFilterPlaceType) {
     SPFilterPlaceTypeInvalid = -1,
     SPFilterPlaceTypeGeocode = 0,
     SPFilterPlaceTypeEstablishment,
     SPFilterPlaceTypeCities
-} SPGooglePlacesAutocompleteFilterPlaceType;
+};
 
-typedef enum {
+typedef NS_ENUM(NSInteger, SPGooglePlacesAutocompletePlaceType) {
     SPPlaceTypeAccounting,
     SPPlaceTypeAdministrativeAreaLevel1,
     SPPlaceTypeAdministrativeAreaLevel2,
@@ -144,7 +144,7 @@ typedef enum {
     SPPlaceTypeUniversity,
     SPPlaceTypeVeterinaryCare,
     SPPlaceTypeZoo
-}   SPGooglePlacesAutocompletePlaceType;
+};
 
 typedef void (^SPGooglePlacesPlacemarkResultBlock)(CLPlacemark *placemark, NSString *addressString, NSError *error);
 typedef void (^SPGooglePlacesAutocompleteResultBlock)(NSArray *places, NSError *error);

@@ -177,7 +177,9 @@ NSArray *SPPlaceTypeFromDictionary(NSDictionary *placeDictionary) {
     for (NSString *typeKey in placeDictionary[@"types"]) {
         NSNumber *typeNumber = [SPGetMatchingDictionaryType() objectForKey:typeKey];
         
-        [types addObject:typeNumber];
+        if (typeNumber) {
+            [types addObject:typeNumber];
+        }
     }
     
     return types;
@@ -193,7 +195,9 @@ NSArray *SPPlaceTypeStringForPlaceTypes(NSArray *types) {
     for (NSNumber *typeNumber in types) {
         NSString *typeString = [[SPGetMatchingDictionaryType() allKeysForObject:typeNumber] objectAtIndex:0];
         
-        [returnTypes addObject:typeString];
+        if (typeString) {
+            [returnTypes addObject:typeString];
+        }
     }
     
     return returnTypes;
