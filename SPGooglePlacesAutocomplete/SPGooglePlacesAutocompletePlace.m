@@ -13,7 +13,7 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *reference;
 @property (nonatomic, strong) NSString *identifier;
-@property (nonatomic) SPGooglePlacesAutocompletePlaceType type;
+@property (nonatomic, strong) NSArray *types;
 @end
 
 @implementation SPGooglePlacesAutocompletePlace
@@ -24,14 +24,14 @@
     place.name = placeDictionary[@"description"];
     place.reference = placeDictionary[@"reference"];
     place.identifier = placeDictionary[@"id"];
-    place.type = SPPlaceTypeFromDictionary(placeDictionary);
+    place.types = SPPlaceTypeFromDictionary(placeDictionary);
     place.key = apiKey;
     return place;
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"Name: %@, Reference: %@, Identifier: %@, Type: %@",
-            self.name, self.reference, self.identifier, SPPlaceTypeStringForPlaceType(self.type)];
+    return [NSString stringWithFormat:@"Name: %@, Reference: %@, Identifier: %@, Types: %@",
+            self.name, self.reference, self.identifier, SPPlaceTypeStringForPlaceTypes(self.types)];
 }
 
 - (CLGeocoder *)geocoder {
@@ -73,7 +73,7 @@
 }
 
 - (void)resolveToPlacemark:(SPGooglePlacesPlacemarkResultBlock)block {
-    if (self.type == SPPlaceTypeGeocode) {
+    if ([self.types containsObject:[NSNumber numberWithInt:SPPlaceTypeGeocode]]) {
         // Geocode places already have their address stored in the 'name' field.
         [self resolveGecodePlaceToPlacemark:block];
     } else {
