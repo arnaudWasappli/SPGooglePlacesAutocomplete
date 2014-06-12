@@ -53,6 +53,9 @@
     if (self.type != SPFilterPlaceTypeInvalid) {
         [url appendFormat:@"&types=%@", SPPlaceTypeStringForAutocompleteFilterPlaceType(self.type)];
     }
+    if (self.countryCode != nil) {
+        [url appendFormat:@"&components=country:%@", self.countryCode];
+    }
     return url;
 }
 
