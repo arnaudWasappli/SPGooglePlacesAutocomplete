@@ -9,6 +9,7 @@
 #define kGoogleAPINSErrorCode 42
 
 @class CLPlacemark;
+@class SPGooglePlacemark;
 
 typedef NS_ENUM(NSInteger, SPGooglePlacesAutocompleteFilterPlaceType) {
     SPFilterPlaceTypeInvalid = -1,
@@ -147,7 +148,7 @@ typedef NS_ENUM(NSInteger, SPGooglePlacesAutocompletePlaceType) {
     SPPlaceTypeZoo
 };
 
-typedef void (^SPGooglePlacesPlacemarkResultBlock)(CLPlacemark *placemark, NSString *addressString, NSError *error);
+typedef void (^SPGooglePlacesPlacemarkResultBlock)(SPGooglePlacemark *placemark, NSError *error);
 typedef void (^SPGooglePlacesAutocompleteResultBlock)(NSArray *places, NSError *error);
 typedef void (^SPGooglePlacesPlaceDetailResultBlock)(NSDictionary *placeDictionary, NSError *error);
 
