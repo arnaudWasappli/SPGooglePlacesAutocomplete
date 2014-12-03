@@ -11,5 +11,6 @@
 
 #import "SPGooglePlacesAutocompleteQuery.h"
 #import "SPGooglePlacesAutocompletePlace.h"
+#import "SPGooglePlacemark.h"
 
 #endif

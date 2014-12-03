@@ -8,6 +8,7 @@
 
 #import "SPGooglePlacesAutocompletePlace.h"
 #import "SPGooglePlacesPlaceDetailQuery.h"
+#import "SPGooglePlacemark.h"
 
 @interface SPGooglePlacesAutocompletePlace()
 @property (nonatomic, strong) NSString *name;
@@ -46,28 +47,49 @@
     query.reference = self.reference;
     [query fetchPlaceDetail:^(NSDictionary *placeDictionary, NSError *error) {
         if (error) {
-            block(nil, nil, error);
-        } else {
-            NSString *addressString = placeDictionary[@"formatted_address"];
-            [[self geocoder] geocodeAddressString:addressString completionHandler:^(NSArray *placemarks, NSError *error) {
-                if (error) {
-                    block(nil, nil, error);
-                } else {
-                    CLPlacemark *placemark = [placemarks onlyObject];
-                    block(placemark, self.name, error);
-                }
-            }];
+            block(nil, error);
+        }
+        else {
+            CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(
+                                                                            [placeDictionary[@"geometry"][@"location"][@"lat"] doubleValue],
+                                                                            [placeDictionary[@"geometry"][@"location"][@"lng"] doubleValue]
+                                                                            );
+            CLLocation *location         = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
+            NSDictionary *component      = [placeDictionary[@"address_components"] firstObject];
+            NSString *locality           = component[@"short_name"];
+            SPGooglePlacemark *placemark = nil;
+            
+            if (location && locality) {
+                placemark = [[SPGooglePlacemark alloc] initWithLocality:locality location:location];
+            }
+            
+            block(placemark, nil);
         }
     }];
 }
 
 - (void)resolveGecodePlaceToPlacemark:(SPGooglePlacesPlacemarkResultBlock)block {
-    [[self geocoder] geocodeAddressString:self.name completionHandler:^(NSArray *placemarks, NSError *error) {
+    SPGooglePlacesPlaceDetailQuery *query = [[SPGooglePlacesPlaceDetailQuery alloc] initWithApiKey:self.key];
+    query.reference = self.reference;
+    [query fetchPlaceDetail:^(NSDictionary *placeDictionary, NSError *error) {
         if (error) {
-            block(nil, nil, error);
-        } else {
-            CLPlacemark *placemark = [placemarks onlyObject];
-            block(placemark, self.name, error);
+            block(nil, error);
+        }
+        else {
+            CLLocationCoordinate2D coordinates = CLLocationCoordinate2DMake(
+                                                                           [placeDictionary[@"geometry"][@"location"][@"lat"] doubleValue],
+                                                                           [placeDictionary[@"geometry"][@"location"][@"lng"] doubleValue]
+                                                                           );
+            CLLocation *location         = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
+            NSDictionary *component      = [placeDictionary[@"address_components"] firstObject];
+            NSString *locality           = component[@"short_name"];
+            SPGooglePlacemark *placemark = nil;
+            
+            if (location && locality) {
+                placemark = [[SPGooglePlacemark alloc] initWithLocality:locality location:location];
+            }
+            
+            block(placemark, nil);
         }
     }];
 }

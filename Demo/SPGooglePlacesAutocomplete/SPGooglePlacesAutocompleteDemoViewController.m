@@ -75,7 +75,7 @@
 #pragma mark -
 #pragma mark UITableViewDelegate
 
-- (void)recenterMapToPlacemark:(CLPlacemark *)placemark {
+- (void)recenterMapToPlacemark:(SPGooglePlacemark *)placemark {
     MKCoordinateRegion region;
     MKCoordinateSpan span;
     
@@ -88,7 +88,7 @@
     [self.mapView setRegion:region];
 }
 
-- (void)addPlacemarkAnnotationToMap:(CLPlacemark *)placemark addressString:(NSString *)address {
+- (void)addPlacemarkAnnotationToMap:(SPGooglePlacemark *)placemark addressString:(NSString *)address {
     [self.mapView removeAnnotation:selectedPlaceAnnotation];
     
     selectedPlaceAnnotation = [[MKPointAnnotation alloc] init];
@@ -111,7 +111,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     SPGooglePlacesAutocompletePlace *place = [self placeAtIndexPath:indexPath];
-    [place resolveToPlacemark:^(CLPlacemark *placemark, NSString *addressString, NSError *error) {
+    [place resolveToPlacemark:^(SPGooglePlacemark *placemark, NSError *error) {
         if (error) {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Could not map selected Place"
                                                             message:error.localizedDescription
@@ -119,8 +119,9 @@
                                                   cancelButtonTitle:@"OK"
                                                   otherButtonTitles:nil, nil];
             [alert show];
-        } else if (placemark) {
-            [self addPlacemarkAnnotationToMap:placemark addressString:addressString];
+        }
+        else if (placemark) {
+            [self addPlacemarkAnnotationToMap:placemark addressString:placemark.locality];
             [self recenterMapToPlacemark:placemark];
             [self dismissSearchControllerWhileStayingActive];
             [self.searchDisplayController.searchResultsTableView deselectRowAtIndexPath:indexPath animated:NO];
