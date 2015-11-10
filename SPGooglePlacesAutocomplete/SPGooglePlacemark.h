@@ -11,9 +11,10 @@
 
 @interface SPGooglePlacemark : NSObject
 
-@property(readonly, strong, nonatomic) NSString   *locality;
-@property(readonly, strong, nonatomic) CLLocation *location;
+@property (readonly, strong, nonatomic) NSString   *placeID;
+@property (readonly, strong, nonatomic) NSString   *locality;
+@property (readonly, strong, nonatomic) CLLocation *location;
 
-- (instancetype)initWithLocality:(NSString *)locality location:(CLLocation *)location;
+- (instancetype)initWithPlaceID:(NSString *)placeID locality:(NSString *)locality location:(CLLocation *)location;
 
 @end

@@ -57,10 +57,13 @@
             CLLocation *location         = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
             NSDictionary *component      = [placeDictionary[@"address_components"] firstObject];
             NSString *locality           = component[@"short_name"];
+            
+            NSString *placeID = placeDictionary[@"place_id"];
+            
             SPGooglePlacemark *placemark = nil;
             
             if (location && locality) {
-                placemark = [[SPGooglePlacemark alloc] initWithLocality:locality location:location];
+                placemark = [[SPGooglePlacemark alloc] initWithPlaceID:placeID locality:locality location:location];
             }
             
             block(placemark, nil);
@@ -83,10 +86,13 @@
             CLLocation *location         = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
             NSDictionary *component      = [placeDictionary[@"address_components"] firstObject];
             NSString *locality           = component[@"short_name"];
+            
+            NSString *placeID = placeDictionary[@"place_id"];
+
             SPGooglePlacemark *placemark = nil;
             
             if (location && locality) {
-                placemark = [[SPGooglePlacemark alloc] initWithLocality:locality location:location];
+                placemark = [[SPGooglePlacemark alloc] initWithPlaceID:placeID locality:locality location:location];
             }
             
             block(placemark, nil);
