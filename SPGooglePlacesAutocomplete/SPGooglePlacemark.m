@@ -10,10 +10,11 @@
 
 @implementation SPGooglePlacemark
 
-- (instancetype)initWithLocality:(NSString *)locality location:(CLLocation *)location {
+- (instancetype)initWithPlaceID:(NSString *)placeID locality:(NSString *)locality location:(CLLocation *)location {
     self = [super init];
     
     if (self) {
+        self->_placeID  = placeID;
         self->_locality = locality;
         self->_location = location;
     }
