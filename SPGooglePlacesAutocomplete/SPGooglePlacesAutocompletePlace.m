@@ -54,9 +54,8 @@
                                                                             [placeDictionary[@"geometry"][@"location"][@"lat"] doubleValue],
                                                                             [placeDictionary[@"geometry"][@"location"][@"lng"] doubleValue]
                                                                             );
-            CLLocation *location         = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
-            NSDictionary *component      = [placeDictionary[@"address_components"] firstObject];
-            NSString *locality           = component[@"short_name"];
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
+            NSString *locality   = placeDictionary[@"formatted_address"];
             
             NSString *placeID = placeDictionary[@"place_id"];
             
@@ -83,9 +82,8 @@
                                                                            [placeDictionary[@"geometry"][@"location"][@"lat"] doubleValue],
                                                                            [placeDictionary[@"geometry"][@"location"][@"lng"] doubleValue]
                                                                            );
-            CLLocation *location         = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
-            NSDictionary *component      = [placeDictionary[@"address_components"] firstObject];
-            NSString *locality           = component[@"short_name"];
+            CLLocation *location = [[CLLocation alloc] initWithLatitude:coordinates.latitude longitude:coordinates.longitude];
+            NSString *locality   = placeDictionary[@"formatted_address"];
             
             NSString *placeID = placeDictionary[@"place_id"];
 
